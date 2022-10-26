@@ -1,0 +1,60 @@
+CREATE TABLE [dbo].[EmployeeRegistration] (
+    [Id]                INT          IDENTITY (1, 1) NOT NULL,
+    [EmployeeId]        VARCHAR (50) NOT NULL,
+    [FullName]          VARCHAR (50) NOT NULL,
+    [UserName]          VARCHAR (50) NOT NULL,
+    [Password]          VARCHAR (50) NOT NULL,
+    [Gender]            VARCHAR (50) NULL,
+    [DateofBirth]       DATETIME     NULL,
+    [ContactNo]         NCHAR (10)   NULL,
+    [EmailId]           VARCHAR (50) NULL,
+    [Designation]       VARCHAR (50) NULL,
+    [AllocatedLocation] VARCHAR (50) NULL,
+    [DateofJoining]     DATETIME     NULL,
+    [NameofManager]     VARCHAR (50) NULL,
+    [HomeAddress]       VARCHAR (50) NULL,
+    [Delete]            BIT          NULL,
+	[Admin]             Bit          NULL, 
+    CONSTRAINT [PK_EmployeeRegistration] PRIMARY KEY ([Id])
+);
+go
+
+CREATE TABLE [dbo].[LeaveRequest] (
+    [Id]             INT   identity(1,1)        NOT NULL,
+    [EmployeeId]     VARCHAR (20)  NOT NULL,
+    [FullName]       VARCHAR (50)  NOT NULL,
+    [RequestId]      VARCHAR (50)  NOT NULL,
+    [ReasonforLeave] VARCHAR (MAX) NULL,
+    [StartDate]      DATETIME      NULL,
+	[EndDate]        DATETIME      NULL,
+    [NoofDays]       INT           NULL,
+    [Status]         bit  NULL, 
+    CONSTRAINT [PK_LeaveRequest] PRIMARY KEY ([Id]) 
+    
+    
+);
+
+
+go
+
+CREATE TABLE [dbo].[SalaryReport] (
+    [Id]          INT          IDENTITY (1, 1) NOT NULL,
+    [EmployeeId]  VARCHAR (10) NOT NULL,
+    [FullName]    VARCHAR (50) NULL,
+    [Designation] VARCHAR (50) NULL,
+    [BasicSalary] VARCHAR (20) NULL,
+    [Allowances]  VARCHAR (20) NULL,
+    [Deduction]   VARCHAR (20) NULL,
+    [NetSalary]   VARCHAR (20) NULL,
+    [ApprovedBy]  VARCHAR (50) NULL, 
+    [Delete] BIT NULL
+);
+
+go
+
+CREATE TABLE [dbo].[Worksheet] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [Date]     DATETIME      NOT NULL,
+    [TaskDone] VARCHAR (MAX) NULL
+);
+

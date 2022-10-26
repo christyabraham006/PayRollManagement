@@ -1,0 +1,406 @@
+CREATE procedure [dbo].[AddEmployee]
+(
+@Id Int,
+@EmployeeId varchar(10),
+@FullName varchar (20),
+@UserName varchar(20),
+@Password varchar(20),
+@Gender varchar(6),
+@DateofBirth Date,
+@ContactNo varchar(10),
+@EmailId varchar(20),
+@Designation varchar(20),
+@AllocatedLocation varchar(20),
+@DateofJoining Date,
+@NameofManager varchar(20),
+@HomeAddress varchar(50)
+)
+as 
+begin
+insert into EmployeeRegistration values (@EmployeeId,@FullName,@UserName,@Password,@Gender,@DateofBirth,@ContactNo,@EmailId,@Designation,@AllocatedLocation,@DateofJoining,@NameofManager,@HomeAddress,0,0)
+end
+
+Go
+
+CREATE procedure [dbo].[AddRequest]
+(
+@Id Int,
+@EmployeeId varchar(50),
+@FullName varchar (50),
+@RequestId varchar(20),
+@ReasonforLeave varchar (MAX),
+@StartDate Date,
+@EndDate Date,
+@NoofDays int
+)
+as 
+begin
+insert into LeaveRequest values (@EmployeeId,@FullName,@RequestId,@ReasonforLeave,@StartDate,@EndDate,@NoofDays,0)
+end
+
+Go
+
+CREATE procedure [dbo].[AddSalaryReport]
+(
+@Id Int,
+@EmployeeId varchar(50),
+@FullName varchar (50),
+@Designation varchar(50),
+@BasicSalary varchar(20),
+@Allowances  varchar(20),
+@Deduction Varchar(20),
+@NetSalary Varchar(20),
+@ApprovedBy varchar(50)
+
+)
+as 
+begin
+insert into SalaryReport values (@EmployeeId,@FullName,@Designation,@BasicSalary,@Allowances,@Deduction,@NetSalary,@ApprovedBy,0)
+end
+
+Go
+
+CREATE procedure [dbo].[AddWorksheet]
+(
+@Id Int,
+@Date DateTime,
+@TaskDone Varchar(MAX)
+)
+as 
+begin
+insert into Worksheet values (@Date,@TaskDone)
+end
+
+go
+
+
+CREATE procedure [dbo].[DeleteEmployee]
+(
+@Id int
+)
+as
+begin
+Update EmployeeRegistration
+set [Delete]=1
+where Id=@Id
+End
+
+go
+
+CREATE procedure [dbo].[DeleteLeaveRequest]
+(
+@Id int
+)
+as
+begin
+Update LeaveRequest
+set [Status]=1
+where Id=@Id
+End
+go
+
+CREATE procedure [dbo].[DeleteSalaryReport]
+(
+@Id int
+)
+as
+begin
+Update SalaryReport
+set [Delete]=1
+where Id=@Id
+End
+go
+
+
+Create Procedure [dbo].[GetById]
+(@Id Int)
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   UserName,
+   Password,
+   Gender,
+   DateofBirth,
+   ContactNo,
+   EmailId,
+   Designation,
+   AllocatedLocation,
+   DateofJoining,
+   NameofManager,
+   HomeAddress,
+   Admin FROM EmployeeRegistration where Id=@Id
+End
+go
+Create Procedure [dbo].[GetByLeaveId]
+(@Id Int)
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   RequestId,
+   ReasonforLeave,
+   StartDate,
+   EndDate,
+   NoofDays  FROM LeaveRequest where Id=@Id
+End
+go
+Create Procedure [dbo].[GetBySalaryId]
+(@Id Int)
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   Designation,
+   BasicSalary,
+   Allowances,
+   Deduction,
+   NetSalary,
+   ApprovedBy  FROM SalaryReport where Id=@Id
+End
+go
+
+Create Procedure [dbo].[GetEmployees]
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   UserName,
+   Password,
+   Gender,
+   DateofBirth,
+   ContactNo,
+   EmailId,
+   Designation,
+   AllocatedLocation,
+   DateofJoining,
+   NameofManager,
+   HomeAddress,
+   Admin
+   FROM EmployeeRegistration where [Delete]=0
+End
+go
+
+
+CREATE PROCEDURE [dbo].[GetId]
+@Id INT OUTPUT
+AS
+BEGIN
+SET NOCOUNT ON;
+SELECT @Id = IDENT_CURRENT('EmployeeRegistration') 
+END
+go
+
+CREATE PROCEDURE [dbo].[GetLeaveId]
+@Id INT OUTPUT
+AS
+BEGIN
+SET NOCOUNT ON;
+SELECT @Id = IDENT_CURRENT('LeaveRequest') 
+END
+go
+
+Create Procedure [dbo].[GetLeaveRequest]
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   RequestId,
+   ReasonforLeave,
+   StartDate,
+   EndDate,
+   NoofDays
+   FROM LeaveRequest where [Status]=0
+End
+
+go
+
+CREATE PROCEDURE [dbo].[GetSalaryId]
+@Id INT OUTPUT
+AS
+BEGIN
+SET NOCOUNT ON;
+SELECT @Id = IDENT_CURRENT('SalaryReport') 
+END
+
+go
+Create Procedure [dbo].[GetSalaryReport]
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   Designation,
+   BasicSalary,
+   Allowances,
+   Deduction,
+   NetSalary,
+   ApprovedBy
+   FROM SalaryReport where [Delete]=0
+End
+
+go
+
+Create Procedure [dbo].[LeaveUser]
+(@EmployeeId Varchar(50))
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   RequestId,
+   ReasonforLeave,
+   StartDate,
+   EndDate,
+   NoofDays  
+   from LeaveRequest where EmployeeId=@EmployeeId
+End
+go
+
+Create Procedure [dbo].[Login]
+(@UserName Varchar(50))
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   UserName,
+   Password,
+   Gender,
+   DateofBirth,
+   ContactNo,
+   EmailId,
+   Designation,
+   AllocatedLocation,
+   DateofJoining,
+   NameofManager,
+   HomeAddress,
+   Admin FROM EmployeeRegistration where UserName=@UserName
+End
+
+go
+Create Procedure [dbo].[SalaryUser]
+(@EmployeeId Varchar(50))
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   Designation,
+   BasicSalary,
+   Allowances,
+   Deduction,
+   NetSalary,
+   ApprovedBy  
+   from SalaryReport where EmployeeId=@EmployeeId
+End
+go
+
+CREATE procedure [dbo].[UpdateEmployee]  
+(  
+@Id int,
+@EmployeeId varchar(10),
+@FullName varchar (20),
+@Gender varchar(6),
+@DateofBirth Date,
+@ContactNo varchar(10),
+@EmailId varchar(20),
+@Designation varchar(20),
+@AllocatedLocation varchar(20),
+@DateofJoining Date,
+@NameofManager varchar(20),
+@HomeAddress varchar(50)
+   
+)  
+as  
+begin  
+   Update EmployeeRegistration   
+   set FullName=@FullName,  
+   Gender=@Gender,  
+   DateofBirth=@DateofBirth,
+   ContactNo=@ContactNo,
+   EmailId=@EmailId,
+   Designation=@Designation,
+   AllocatedLocation=@AllocatedLocation,
+   DateofJoining=@DateofJoining,
+   NameofManager=@NameofManager,
+   HomeAddress=@HomeAddress
+   where Id=@Id 
+End
+go
+CREATE procedure [dbo].[UpdateLeaveRequest]
+(
+@Id Int,
+@EmployeeId varchar(50),
+@FullName varchar (50),
+@RequestId varchar(20),
+@ReasonforLeave varchar (MAX),
+@StartDate Date,
+@EndDate Date,
+@NoofDays int
+)
+as  
+begin 
+Update LeaveRequest
+set EmployeeId=@EmployeeId,
+FullName=@FullName,
+RequestId=@RequestId,
+ReasonforLeave=@ReasonforLeave,
+StartDate=@StartDate,
+EndDate=@EndDate,
+NoofDays=@NoofDays
+Where Id=@Id
+End
+go
+CREATE procedure [dbo].[UpdateSalaryReport]
+(
+@Id Int,
+@EmployeeId varchar(50),
+@FullName varchar (50),
+@Designation varchar(50),
+@BasicSalary varchar(20),
+@Allowances  varchar(20),
+@Deduction Varchar(20),
+@NetSalary Varchar(20),
+@ApprovedBy varchar(50)
+)
+as  
+begin 
+Update SalaryReport
+set EmployeeId=@EmployeeId,
+FullName=@FullName,
+Designation=@Designation,
+BasicSalary=@BasicSalary,
+Allowances=@Allowances,
+Deduction=@Deduction,
+NetSalary=@NetSalary,
+ApprovedBy=@ApprovedBy
+Where Id=@Id
+End
+go
+Create Procedure [dbo].[UserEmployee]
+(@EmployeeId varchar(50))
+as
+begin
+SELECT Id,
+   EmployeeId,
+   FullName,
+   UserName,
+   Password,
+   Gender,
+   DateofBirth,
+   ContactNo,
+   EmailId,
+   Designation,
+   AllocatedLocation,
+   DateofJoining,
+   NameofManager,
+   HomeAddress,
+   Admin
+   FROM EmployeeRegistration where EmployeeId=@EmployeeId
+   End

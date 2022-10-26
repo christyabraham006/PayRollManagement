@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Userdashboard";
+}
+<center><h1>@User.Identity.Name</h1></center>
+<br />
+<br />
+<button onclick="document.location='https://localhost:44357/Registration/Index'" type="button" class="btn btn-primary btn-lg">EmployeeDetails</button>
+<br />
+<br />
+<button onclick="document.location='https://localhost:44357/EmployeeLeave/Index'" type="button" class="btn btn-primary btn-lg">ApplyLeave</button>
+<br />
+<br />
+@*<button onclick="document.location='https://localhost:44357/Salary/Generate'" type="button" class="btn btn-primary btn-lg">SalaryReport</button>
+<br />
+<br />*@
+<button onclick="document.location='https://localhost:44357/Salary/Index'" type="button" class="btn btn-primary btn-lg">SalaryReport</button>
+<br />
+<br />
+<button type="button" class="btn btn-primary btn-lg">CheckLeave</button>
+<br />
+<br />
+<button type="button" class="btn btn-primary btn-lg">Worksheet</button>
+
+
+
